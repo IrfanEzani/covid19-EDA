@@ -49,6 +49,8 @@ where continent is not null
 
 -- Query 9: Calculate the percentage of population that has received at least one Covid vaccine
 Select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations,
+--  calculates the cumulative sum of new_vaccinations for each location (dea.Location) ordered by location and date. 
+--  rolling sum resets whenever the location changes.
        SUM(CONVERT(int, vac.new_vaccinations)) OVER (Partition by dea.Location Order by dea.location, dea.Date) as RollingPeopleVaccinated
 From PortfolioProject..CovidDeaths dea
 Join PortfolioProject..CovidVaccinations vac
